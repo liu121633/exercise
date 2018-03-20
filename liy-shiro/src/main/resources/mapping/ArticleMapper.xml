@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.liy.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.example.liy.pojo.Article">
+    <id column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="article_sketch" jdbcType="VARCHAR" property="articleSketch" />
+    <result column="article_type" jdbcType="INTEGER" property="articleType" />
+    <result column="article_author" jdbcType="VARCHAR" property="articleAuthor" />
+    <result column="article_postedtime" jdbcType="TIMESTAMP" property="articlePostedtime" />
+    <result column="article_state" jdbcType="INTEGER" property="articleState" />
+    <result column="article_browse" jdbcType="INTEGER" property="articleBrowse" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.liy.pojo.Article">
+    <result column="article_content" jdbcType="LONGVARCHAR" property="articleContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    article_id, article_title, article_sketch, article_type, article_author, article_postedtime, 
+    article_state, article_browse
+  </sql>
+  <sql id="Blob_Column_List">
+    article_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.example.liy.pojo.ArticleExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.example.liy.pojo.ArticleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from article
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.liy.pojo.ArticleExample">
+    delete from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.liy.pojo.Article">
+    <selectKey keyProperty="articleId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into article (article_title, article_sketch, article_type, 
+      article_author, article_postedtime, article_state, 
+      article_browse, article_content)
+    values (#{articleTitle,jdbcType=VARCHAR}, #{articleSketch,jdbcType=VARCHAR}, #{articleType,jdbcType=INTEGER}, 
+      #{articleAuthor,jdbcType=VARCHAR}, #{articlePostedtime,jdbcType=TIMESTAMP}, #{articleState,jdbcType=INTEGER}, 
+      #{articleBrowse,jdbcType=INTEGER}, #{articleContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.liy.pojo.Article">
+    <selectKey keyProperty="articleId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleTitle != null">
+        article_title,
+      </if>
+      <if test="articleSketch != null">
+        article_sketch,
+      </if>
+      <if test="articleType != null">
+        article_type,
+      </if>
+      <if test="articleAuthor != null">
+        article_author,
+      </if>
+      <if test="articlePostedtime != null">
+        article_postedtime,
+      </if>
+      <if test="articleState != null">
+        article_state,
+      </if>
+      <if test="articleBrowse != null">
+        article_browse,
+      </if>
+      <if test="articleContent != null">
+        article_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleTitle != null">
+        #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleSketch != null">
+        #{articleSketch,jdbcType=VARCHAR},
+      </if>
+      <if test="articleType != null">
+        #{articleType,jdbcType=INTEGER},
+      </if>
+      <if test="articleAuthor != null">
+        #{articleAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="articlePostedtime != null">
+        #{articlePostedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleState != null">
+        #{articleState,jdbcType=INTEGER},
+      </if>
+      <if test="articleBrowse != null">
+        #{articleBrowse,jdbcType=INTEGER},
+      </if>
+      <if test="articleContent != null">
+        #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.liy.pojo.ArticleExample" resultType="java.lang.Long">
+    select count(*) from article
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update article
+    <set>
+      <if test="record.articleId != null">
+        article_id = #{record.articleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleTitle != null">
+        article_title = #{record.articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleSketch != null">
+        article_sketch = #{record.articleSketch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleType != null">
+        article_type = #{record.articleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleAuthor != null">
+        article_author = #{record.articleAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articlePostedtime != null">
+        article_postedtime = #{record.articlePostedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.articleState != null">
+        article_state = #{record.articleState,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleBrowse != null">
+        article_browse = #{record.articleBrowse,jdbcType=INTEGER},
+      </if>
+      <if test="record.articleContent != null">
+        article_content = #{record.articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update article
+    set article_id = #{record.articleId,jdbcType=INTEGER},
+      article_title = #{record.articleTitle,jdbcType=VARCHAR},
+      article_sketch = #{record.articleSketch,jdbcType=VARCHAR},
+      article_type = #{record.articleType,jdbcType=INTEGER},
+      article_author = #{record.articleAuthor,jdbcType=VARCHAR},
+      article_postedtime = #{record.articlePostedtime,jdbcType=TIMESTAMP},
+      article_state = #{record.articleState,jdbcType=INTEGER},
+      article_browse = #{record.articleBrowse,jdbcType=INTEGER},
+      article_content = #{record.articleContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update article
+    set article_id = #{record.articleId,jdbcType=INTEGER},
+      article_title = #{record.articleTitle,jdbcType=VARCHAR},
+      article_sketch = #{record.articleSketch,jdbcType=VARCHAR},
+      article_type = #{record.articleType,jdbcType=INTEGER},
+      article_author = #{record.articleAuthor,jdbcType=VARCHAR},
+      article_postedtime = #{record.articlePostedtime,jdbcType=TIMESTAMP},
+      article_state = #{record.articleState,jdbcType=INTEGER},
+      article_browse = #{record.articleBrowse,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.liy.pojo.Article">
+    update article
+    <set>
+      <if test="articleTitle != null">
+        article_title = #{articleTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="articleSketch != null">
+        article_sketch = #{articleSketch,jdbcType=VARCHAR},
+      </if>
+      <if test="articleType != null">
+        article_type = #{articleType,jdbcType=INTEGER},
+      </if>
+      <if test="articleAuthor != null">
+        article_author = #{articleAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="articlePostedtime != null">
+        article_postedtime = #{articlePostedtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="articleState != null">
+        article_state = #{articleState,jdbcType=INTEGER},
+      </if>
+      <if test="articleBrowse != null">
+        article_browse = #{articleBrowse,jdbcType=INTEGER},
+      </if>
+      <if test="articleContent != null">
+        article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.liy.pojo.Article">
+    update article
+    set article_title = #{articleTitle,jdbcType=VARCHAR},
+      article_sketch = #{articleSketch,jdbcType=VARCHAR},
+      article_type = #{articleType,jdbcType=INTEGER},
+      article_author = #{articleAuthor,jdbcType=VARCHAR},
+      article_postedtime = #{articlePostedtime,jdbcType=TIMESTAMP},
+      article_state = #{articleState,jdbcType=INTEGER},
+      article_browse = #{articleBrowse,jdbcType=INTEGER},
+      article_content = #{articleContent,jdbcType=LONGVARCHAR}
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.liy.pojo.Article">
+    update article
+    set article_title = #{articleTitle,jdbcType=VARCHAR},
+      article_sketch = #{articleSketch,jdbcType=VARCHAR},
+      article_type = #{articleType,jdbcType=INTEGER},
+      article_author = #{articleAuthor,jdbcType=VARCHAR},
+      article_postedtime = #{articlePostedtime,jdbcType=TIMESTAMP},
+      article_state = #{articleState,jdbcType=INTEGER},
+      article_browse = #{articleBrowse,jdbcType=INTEGER}
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+</mapper>

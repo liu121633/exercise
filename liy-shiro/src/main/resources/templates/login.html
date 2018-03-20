@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url("../static/img/background.jpg");
+        background-size: cover;
+        -moz-background-size: cover;
+
+    }
+
+    #user {
+        padding: 20px;
+        width: 400px;
+        border-radius: 10px;
+        margin-top: 150px;
+
+    }
+</style>
+<body>
+<form id="user" action="/login" method="post">
+    <p th:text="${msg}"></p>
+    <p><label class="control-label">账号:</label><input class="form-control" type="text" name="username"></p>
+    <p><label class="control-label">密码:</label><input class="form-control" type="password" name="password"></p>
+    <p><input class="btn btn-primary" type="submit" value="登陆" style="width: 100%"></p>
+</form>
+</body>
+</html>
