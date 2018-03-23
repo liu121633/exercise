@@ -1,10 +1,10 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018-03-23 14:09:50                          */
+/* Created on:     2018-03-23 14:20:23                          */
 /*==============================================================*/
 
 
-drop table if exists prod_class;
+drop table if exists prod_host;
 
 drop table if exists tbl_market_output;
 
@@ -14,26 +14,28 @@ drop table if exists tbl_market_output_detail;
 
 drop table if exists tbl_market_output_remark;
 
-drop table if exists tbl_prod_basic;
+drop table if exists tbl_prod_class;
 
-drop table if exists tbl_prod_describe;
+drop table if exists 物料基本资料;
 
-drop table if exists tbl_prod_host;
+drop table if exists 物料存量总信息;
 
-drop table if exists tbl_prod_stock;
+drop table if exists 物料描述;
 
 /*==============================================================*/
-/* Table: prod_class                                            */
+/* Table: prod_host                                             */
 /*==============================================================*/
-create table prod_class
+create table prod_host
 (
-   prod_class_id        varchar(100) not null comment '物料类别编号',
-   prod_class_name      varchar(255) comment '物料类别名称',
-   prod_class_eng_name  varchar(255) comment '物料类别英文名称',
-   primary key (prod_class_id)
+   prod_id              varchar(100) not null comment '物料编号',
+   prod_class_id        varchar(100) comment '物料类别编号',
+   prod_name            varchar(255) comment '物料名称',
+   std_unit_id          varchar(255) comment '计量单位',
+   prod_size            varchar(255) comment '规格型号',
+   bar_code_id          varchar(255) comment '条形码编号',
+   eng_name             varchar(255) comment '英文品名',
+   primary key (prod_id)
 );
-
-alter table prod_class comment '物料类别';
 
 /*==============================================================*/
 /* Table: tbl_market_output                                     */
@@ -60,8 +62,6 @@ create table tbl_market_output
    primary key (tbl_market_output_no)
 );
 
-alter table tbl_market_output comment '销售出库单';
-
 /*==============================================================*/
 /* Table: tbl_market_output_credit                              */
 /*==============================================================*/
@@ -75,15 +75,13 @@ create table tbl_market_output_credit
    credit_acc_month     date comment '销售出库单_账款账款月份'
 );
 
-alter table tbl_market_output_credit comment '销售出库单_账款';
-
 /*==============================================================*/
 /* Table: tbl_market_output_detail                              */
 /*==============================================================*/
 create table tbl_market_output_detail
 (
    tbl_market_output_no varchar(100) comment '销售出库单单据号码',
-   line_no              int not null comment '行号',
+   line_no              int comment '行号',
    prod_id              varchar(100) comment '物料编号',
    quantity             decimal(50,0) comment '数量',
    old_price            decimal(50,2) comment '折扣前单价',
@@ -95,11 +93,8 @@ create table tbl_market_output_detail
    item_remark          varchar(255) comment '分录备注',
    tran_type            varchar(100) comment '来源单别',
    from_no              varchar(100) comment '来源单号',
-   cust_bill_no         varchar(100) comment '客户订单',
-   primary key (line_no)
+   cust_bill_no         varchar(100) comment '客户订单'
 );
-
-alter table tbl_market_output_detail comment '销售出库单内容';
 
 /*==============================================================*/
 /* Table: tbl_market_output_remark                              */
@@ -112,12 +107,21 @@ create table tbl_market_output_remark
    remark               varchar(5000)
 );
 
-alter table tbl_market_output_remark comment '销售出库单_备注';
+/*==============================================================*/
+/* Table: tbl_prod_class                                        */
+/*==============================================================*/
+create table tbl_prod_class
+(
+   prod_class_id        varchar(100) not null comment '物料类别编号',
+   prod_class_name      varchar(255) comment '物料类别名称',
+   prod_class_eng_name  varchar(255) comment '物料类别英文名称',
+   primary key (prod_class_id)
+);
 
 /*==============================================================*/
-/* Table: tbl_prod_basic                                        */
+/* Table: 物料基本资料                                                */
 /*==============================================================*/
-create table tbl_prod_basic
+create table 物料基本资料
 (
    prod_id              varchar(100) comment '物料编号',
    sugges_price         decimal(50,0) comment '物料建议售价',
@@ -131,42 +135,10 @@ create table tbl_prod_basic
    prod_std_price       decimal(50,2) comment '物料标准进价'
 );
 
-alter table tbl_prod_basic comment '物料基本资料';
-
 /*==============================================================*/
-/* Table: tbl_prod_describe                                     */
+/* Table: 物料存量总信息                                               */
 /*==============================================================*/
-create table tbl_prod_describe
-(
-   prod_id              varchar(100) comment '物料编号',
-   prod_udef1           varchar(255) comment '物料自定义栏一',
-   prod_udef2           varchar(255) comment '物料自定义栏二',
-   prod_desc            varchar(5000) comment '物料说明'
-);
-
-alter table tbl_prod_describe comment '物料描述';
-
-/*==============================================================*/
-/* Table: tbl_prod_host                                         */
-/*==============================================================*/
-create table tbl_prod_host
-(
-   prod_id              varchar(100) not null comment '物料编号',
-   prod_class_id        varchar(100) comment '物料类别编号',
-   prod_name            varchar(255) comment '物料名称',
-   std_unit_id          varchar(255) comment '计量单位',
-   prod_size            varchar(255) comment '规格型号',
-   bar_code_id          varchar(255) comment '条形码编号',
-   eng_name             varchar(255) comment '英文品名',
-   primary key (prod_id)
-);
-
-alter table tbl_prod_host comment '物料主文件';
-
-/*==============================================================*/
-/* Table: tbl_prod_stock                                        */
-/*==============================================================*/
-create table tbl_prod_stock
+create table 物料存量总信息
 (
    prod_id              varchar(100) comment '物料编号',
    b_safe_all_stk       decimal(50,0) comment '安全存量',
@@ -181,7 +153,19 @@ create table tbl_prod_stock
    c_all_cost           decimal(50,2) comment '现行总成本'
 );
 
-alter table tbl_prod_stock comment '物料存量总信息';
+/*==============================================================*/
+/* Table: 物料描述                                                  */
+/*==============================================================*/
+create table 物料描述
+(
+   prod_id              varchar(100) comment '物料编号',
+   prod_udef1           varchar(255) comment '物料自定义栏一',
+   prod_udef2           varchar(255) comment '物料自定义栏二',
+   prod_desc            varchar(5000) comment '物料说明'
+);
+
+alter table prod_host add constraint FK_Reference_1 foreign key (prod_class_id)
+      references tbl_prod_class (prod_class_id) on delete restrict on update restrict;
 
 alter table tbl_market_output_credit add constraint FK_Reference_5 foreign key (tbl_market_output_no)
       references tbl_market_output (tbl_market_output_no) on delete restrict on update restrict;
@@ -192,15 +176,12 @@ alter table tbl_market_output_detail add constraint FK_Reference_7 foreign key (
 alter table tbl_market_output_remark add constraint FK_Reference_6 foreign key (tbl_market_output_no)
       references tbl_market_output (tbl_market_output_no) on delete restrict on update restrict;
 
-alter table tbl_prod_basic add constraint FK_Reference_3 foreign key (prod_id)
-      references tbl_prod_host (prod_id) on delete restrict on update restrict;
+alter table 物料基本资料 add constraint FK_Reference_3 foreign key (prod_id)
+      references prod_host (prod_id) on delete restrict on update restrict;
 
-alter table tbl_prod_describe add constraint FK_Reference_2 foreign key (prod_id)
-      references tbl_prod_host (prod_id) on delete restrict on update restrict;
+alter table 物料存量总信息 add constraint FK_Reference_4 foreign key (prod_id)
+      references prod_host (prod_id) on delete restrict on update restrict;
 
-alter table tbl_prod_host add constraint FK_Reference_1 foreign key (prod_class_id)
-      references prod_class (prod_class_id) on delete restrict on update restrict;
-
-alter table tbl_prod_stock add constraint FK_Reference_4 foreign key (prod_id)
-      references tbl_prod_host (prod_id) on delete restrict on update restrict;
+alter table 物料描述 add constraint FK_Reference_2 foreign key (prod_id)
+      references prod_host (prod_id) on delete restrict on update restrict;
 
