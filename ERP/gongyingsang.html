@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+<title>无标题文档</title>
+<link rel="stylesheet" type="text/css"
+	href="extjs/resources/css/ext-all.css" />
+<script type="text/javascript" src="extjs/ext-all.js"></script>
+<script type="text/javascript" src="extjs/ext-lang-zh_CN.js"></script>
+<script>
+	Ext.onReady(function(){
+		Ext.BLANK_IMAGE_URL = "extjs/resources/images/default/s.gif";
+	    Ext.QuickTips.init();
+		mainWindow.show();
+		
+});
+
+
+var fielmenu=new Ext.menu.Menu({
+		items:[{text:'期初账款设定',handler:function(){
+			fromaction();
+		}},{text:'原产物料设定'}]
+	});
+	var fielmenu2=new Ext.menu.Menu({
+		items:[{text:'上网'},{text:'写信'},{text:'历史交易查询'},{text:'帐额数据效验'}]
+	});
+
+
+var grids=Ext.create('Ext.grid.Panel',{
+	 listeners:{
+						containerdblclick: function(grid, e, eOpts){ //单击事件
+	    						grid.getStore().add({'name':'', 'dizhi':'','bianma':'','lianxi':''});
+    						
+    					}
+				
+			},plugins: [
+        				Ext.create('Ext.grid.plugin.CellEditing', {
+            				clicksToEdit: 1
+        				})
+    				],
+	columns: [
+				 {header: '（栏号）',
+	                    		xtype: 'rownumberer',
+	                    		dataIndex: 'lh', 
+	                    		width: 50,
+								sortable: false
+        					},
+					
+        		{ header: '地址编号',  dataIndex: 'name',editor: { xtype:'textfield'}},
+       			{ header: '地址', dataIndex: 'dizhi', flex: 1,editor: { xtype:'textfield'}},
+       				  { header: '邮政编码', dataIndex: 'bianma',editor: { xtype:'textfield'} },
+					 { header: '联系人', dataIndex: 'lianxi',editor: { xtype:'textfield'} },
+   					 ],
+   			 height: 130,
+			 width:'100%',
+			 autoScroll:false,
+			 
+});
+	
+
+var formpalcd=Ext.create('Ext.form.Panel', { //表单
+    bodyPadding: 5,
+    width:'100%',
+    // 将会通过 AJAX 请求提交到此URL
+   // url: 'save-form.php',
+    // 表单域 Fields 将被竖直排列, 占满整个宽度
+    layout: 'column',
+    defaults: {
+        anchor: '100%'
+    },
+
+    // The fields
+    defaultType: 'textfield',
+    items: [{
+			xtype: 'textfield',
+       		name: 'supplierId',
+			fieldLabel: '供应商编号',
+       		labelWidth: 70
+         
+			},{
+		style:'margin-left:9px',
+		 xtype: 'textfield',
+        name: 'accountBelong',
+        fieldLabel: '账款归属',
+        labelWidth: 70,
+        anchor: '100%',
+			},{
+		 xtype: 'textfield',
+        name:'supplierFullName',
+        fieldLabel: '供应商全称',
+        labelWidth: 70,
+        anchor: '100%',
+			},{
+			style:'margin-left:9px',
+		 xtype: 'textfield',
+        name: 'genre',
+        fieldLabel: '类别',
+        labelWidth: 70,
+		vtype:'url',//只能输入网址
+        anchor: '100%',
+			},{
+		 xtype: 'textfield',
+        name: 'supplierSimName',
+        fieldLabel: '供应商简称',
+        labelWidth: 70,
+		regex:/^[\u4E00-\u9FA5]+$/,//自定义正则表达式,(只能输入汉字);
+		regexText:'叫你输入汉字啊,SB吗？',//提示
+        anchor: '100%',
+			},{
+			style:'margin-left:9px',
+		 xtype: 'textfield', //多行文本域
+        name: 'area',
+        fieldLabel: '地区',
+        labelWidth: 70,
+        anchor: '100%',
+			},{
+		 xtype: 'textfield',
+        fieldLabel: '英文全称',
+		regex:/^[A-Za-z]+$/,//自定义正则表达式,(只能输入汉字);
+		regexText:'叫你输入英文列啊,SB吗？',//提示
+        labelWidth: 70,
+        anchor: '100%',
+			},{
+			style:'margin-left:9px',
+		 xtype: 'textfield',  //数值
+        name: 'currency',
+        fieldLabel: '币别',
+        labelWidth: 70,
+        anchor: '100%',
+			},{
+		 xtype: 'textfield', //日期
+        fieldLabel: '英文简称',
+		regex:/^[A-Za-z]+$/,//自定义正则表达式,(只能输入汉字);
+		regexText:'输入英文',//提示
+        labelWidth: 70,
+        anchor: '100%',
+			},{
+		style:'margin-left:9px',
+		 xtype: 'textfield',
+        name: 'address',
+        fieldLabel: '公司地址',
+        labelWidth: 70,
+        anchor: '100%',
+			},{
+				xtype:"tabpanel",
+				width:'100%',
+				height:'220px',
+				items:[{
+					title:'基本资料',
+					bodyPadding: 5,
+						layout:"column",
+					items:[{
+				xtype: 'textfield',
+				width:'120',
+       			name: 'responsible',
+				fieldLabel: '负责人',
+       			labelWidth: 70
+			},{
+			xtype: 'textfield',
+       		name: 'purchaseName',
+			fieldLabel: '采购人',
+			style:'margin-left:19px',
+       		labelWidth: 70
+			},{
+			xtype: 'textfield',
+       		name: 'linkMan',
+			fieldLabel: '联系人',
+       		labelWidth: 70
+			},{
+			xtype: 'textfield',
+       		name: 'taxNo',
+			fieldLabel: '税务登记号',
+			style:'margin-left:19px',
+       		labelWidth: 70
+			},
+			{
+			xtype: 'textfield',
+       		name: 'telephoneone',
+			fieldLabel: '联系电话',
+       		labelWidth: 70
+			},{
+			xtype: 'textfield',
+       		name: 'capitalization',
+			fieldLabel: '资本额',
+			style:'margin-left:19px',
+       		labelWidth: 70
+			},{
+			xtype: 'textfield',
+			fieldLabel: '联系电话二',
+       		labelWidth: 70
+			},{
+			xtype: 'textfield',
+			fieldLabel: '行业别',
+			style:'margin-left:19px',
+       		labelWidth: 70
+			},{
+			xtype: 'textfield',
+			fieldLabel: '银行账号',
+       		labelWidth: 70
+			},{
+			xtype: 'textfield',
+			fieldLabel: '电子邮件',
+			style:'margin-left:19px',
+       		labelWidth: 70
+			},{
+			xtype: 'textfield',
+			fieldLabel: '网址',
+       		labelWidth: 70
+			},{
+			xtype: 'textfield',
+			fieldLabel: '传真号码',
+			style:'margin-left:19px',
+       		labelWidth: 70
+			}]
+				},{
+				title:"采购信息",
+				bodyPadding: 5,
+				style:'padding-top:5px',
+				height:'200px',
+				items:[
+				{
+			xtype: 'datefield',
+       		name: 'earliestTradeDate',
+			fieldLabel: '最近采购入库日',
+       		labelWidth: 90
+			},{
+		 xtype: 'datefield',
+        name: 'latelyReturnDate',
+        fieldLabel: '最近采购退货日',
+        labelWidth: 90,
+			},{
+	             	fieldLabel: '单价是否含税',
+					xtype:'combo',
+	             	name: 'priceofTax',
+	             	displayField: 'name',
+					labelWidth:90,
+    				valueField: 'abbr',
+					store: Ext.create('Ext.data.Store', {
+						fields: ['abbr', 'name'],
+    					data : [
+        					{"abbr":"含税", "name":"含税"},
+        					{"abbr":"未税", "name":"未税"}
+							
+					   ]
+					}),
+					value: '含税',
+        			typeAhead: true,
+        			mode: 'local',
+        			triggerAction: 'all',
+        			selectOnFocus:true,
+        			
+	         	},{
+		 xtype: 'datefield',
+        name: 'invalidDate',
+        fieldLabel: '终止交易日',
+        labelWidth: 90,
+			}
+				]
+				
+			},{
+				title:"付款信息",
+				bodyPadding: 5,
+				layout:"column",
+				height:'200px',
+				items:[{
+					xtype:'label',
+					text:'额度设定',
+					style:'border-bottom:1px solid blue;color:#350257;',
+				},{
+					xtype:'label',
+					text:'账款信息',
+					margin:'0 190',
+					style:'border-bottom:1px solid blue;color:#350257;',
+				},
+				{
+				xtype: 'textfield',
+				width:'120',
+       			name: 'amountQuota',
+				margin:"2",
+				fieldLabel: '账款额度',
+       			labelWidth: 60
+			},{
+				xtype: 'textfield',
+				width:'120',
+       			name: 'startAdvRecv',
+				margin:"2",
+				fieldLabel: '期初预付款',
+       			labelWidth: 70
+			},{
+				xtype: 'textfield',
+				width:'120',
+       			name: 'remainQuota',
+				margin:"2",
+				fieldLabel: '剩余额度',
+       			labelWidth: 60
+			},{
+				xtype: 'textfield',
+				width:'120',
+       			name: 'startReceivable',
+				margin:"2",
+				fieldLabel: '期初应付款',
+       			labelWidth: 70
+			},{
+				xtype: 'textfield',
+				width:'120',
+				margin:"2",
+				fieldLabel: '发票类型',
+       			labelWidth: 60
+			},{
+				xtype: 'textfield',
+				width:'120',
+       			name: 'cuReceiRecv',
+				margin:"2",
+				fieldLabel: '期末预付款',
+       			labelWidth: 70
+			},{
+	             	fieldLabel: '信用等级',
+					xtype:'combo',
+	             	name: 'creditLevel',
+	             	displayField: 'name',
+					labelWidth:63,
+    				valueField: 'abbr',
+					store: Ext.create('Ext.data.Store', {
+						fields: ['abbr', 'name'],
+    					data : [
+        					{"abbr":"A", "name":"A"},
+        					{"abbr":"B", "name":"B"},
+							{"abbr":"C", "name":"C"},
+							{"abbr":"D", "name":"D"},
+							{"abbr":"E", "name":"E"},
+							{"abbr":"F", "name":"F"}
+					   ]
+					}),
+					value: 'A',
+        			typeAhead: true,
+        			mode: 'local',
+        			triggerAction: 'all',
+        			selectOnFocus:true,
+        			
+	         	},{
+				xtype: 'textfield',
+				width:'120',
+       			name: 'cuReceivable',
+				margin:"2",
+				fieldLabel: '期末应付款',
+       			labelWidth: 70
+			     }]
+		      },{
+				title:"地址",
+				items:grids,
+			},{
+				title:"其他",
+				height:200,
+				bodyPadding: 15,
+				items:[{
+     		   	xtype     : 'textarea',
+				name:'meMo',
+       		    fieldLabel: '备注',
+				width:400, 
+				labelWidth: 30,
+				height:'100%'
+				}]
+			}]
+		}]
+});
+
+
+
+var mainWindow = new Ext.Window({
+		
+		width:530,
+		height:428,
+		title:"供应商主文件",
+		closable:true,
+		resizable:false, //设置是否可以改变大小
+		draggable:true, //设
+		items:[formpalcd],
+		bbar:[{xtype:"splitbutton",text:'设定',width:90,menu:fielmenu},{xtype:"splitbutton",text:'功能',width:90,menu:fielmenu2}],
+	});
+
+function fromaction(){
+	alert(Ext.encode(formpalcd.getForm().getValues()));// 序列化表单
+}
+
+</script>
+</head>
+
+<body>
+</body>
+</html>
