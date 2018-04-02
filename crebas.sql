@@ -4,7 +4,7 @@
 /*==============================================================*/
 
 
-drop table if exists tbl_market_output;
+drop table if exists tbl_market_output;2222222222222222222222222
 
 drop table if exists tbl_market_output_credit;
 
@@ -27,160 +27,160 @@ drop table if exists tbl_prod_stock;
 /*==============================================================*/
 create table tbl_market_output
 (
-   tbl_market_output_no varchar(100) not null comment 'ÏúÊÛ³ö¿âµ¥µ¥¾İºÅÂë',
-   cust_id              varchar(100) comment '¿Í»§±àºÅ',
-   tbl_market_output_date date comment 'µ¥¾İÈÕÆÚ',
-   addr_id              varchar(255) comment 'ËÍ»õµØÖ·',
-   sale_class_id        varchar(100) comment 'ÏúÊÛ³ö¿âÀàĞÍ',
-   prod_price_of_tax    bool comment 'µ¥¼ÛÊÇ·ñº¬Ë°',
-   exch_rate            decimal(50,0) comment '»ãÂÊ',
-   ware_id              varchar(100) comment '²Ö¿â',
-   has_foreign_trade    bool comment '¹úÍâÃ³Ò×',
-   sales_id             varchar(100) comment 'ÒµÎñÈËÔ±',
-   maker                varchar(100) comment 'ÖÆµ¥ÈËÔ±',
-   depart_id            varchar(100) comment 'ËùÊô²¿ÃÅ',
-   permitter            varchar(100) comment '¸´ºËÈËÔ±',
-   project_id           varchar(100) comment 'ËùÊôÏîÄ¿',
-   tbl_market_output_state bool comment '×´Ì¬',
+   tbl_market_output_no varchar(100) not null comment 'é”€å”®å‡ºåº“å•å•æ®å·ç ',
+   cust_id              varchar(100) comment 'å®¢æˆ·ç¼–å·',
+   tbl_market_output_date date comment 'å•æ®æ—¥æœŸ',
+   addr_id              varchar(255) comment 'é€è´§åœ°å€',
+   sale_class_id        varchar(100) comment 'é”€å”®å‡ºåº“ç±»å‹',
+   prod_price_of_tax    bool comment 'å•ä»·æ˜¯å¦å«ç¨',
+   exch_rate            decimal(50,0) comment 'æ±‡ç‡',
+   ware_id              varchar(100) comment 'ä»“åº“',
+   has_foreign_trade    bool comment 'å›½å¤–è´¸æ˜“',
+   sales_id             varchar(100) comment 'ä¸šåŠ¡äººå‘˜',
+   maker                varchar(100) comment 'åˆ¶å•äººå‘˜',
+   depart_id            varchar(100) comment 'æ‰€å±éƒ¨é—¨',
+   permitter            varchar(100) comment 'å¤æ ¸äººå‘˜',
+   project_id           varchar(100) comment 'æ‰€å±é¡¹ç›®',
+   tbl_market_output_state bool comment 'çŠ¶æ€',
    amount_remaining     decimal(50,2),
    aggregate_amount     decimal(50,2),
    primary key (tbl_market_output_no)
 );
 
-alter table tbl_market_output comment 'ÏúÊÛ³ö¿âµ¥';
+alter table tbl_market_output comment 'é”€å”®å‡ºåº“å•';
 
 /*==============================================================*/
 /* Table: tbl_market_output_credit                              */
 /*==============================================================*/
 create table tbl_market_output_credit
 (
-   tbl_market_output_no varchar(100) comment 'ÏúÊÛ³ö¿âµ¥µ¥¾İºÅÂë',
-   credit_due_to        varchar(100) comment 'ÏúÊÛ³ö¿âµ¥ÕË¿î¹éÊô¿Í»§',
-   credit_prepay_day    date comment 'ÏúÊÛ³ö¿âµ¥_ÕË¿îÊÕ¿îÈÕÆÚ',
-   credit_gather_style  int comment 'ÏúÊÛ³ö¿âµ¥_ÕË¿îÊÕ¿îÌõ¼şÀàĞÍ',
-   credit_gather_delay  int comment 'ÏúÊÛ³ö¿âµ¥_ÕË¿îÊÕ¿îÌõ¼ş',
-   credit_acc_month     date comment 'ÏúÊÛ³ö¿âµ¥_ÕË¿îÕË¿îÔÂ·İ'
+   tbl_market_output_no varchar(100) comment 'é”€å”®å‡ºåº“å•å•æ®å·ç ',
+   credit_due_to        varchar(100) comment 'é”€å”®å‡ºåº“å•è´¦æ¬¾å½’å±å®¢æˆ·',
+   credit_prepay_day    date comment 'é”€å”®å‡ºåº“å•_è´¦æ¬¾æ”¶æ¬¾æ—¥æœŸ',
+   credit_gather_style  int comment 'é”€å”®å‡ºåº“å•_è´¦æ¬¾æ”¶æ¬¾æ¡ä»¶ç±»å‹',
+   credit_gather_delay  int comment 'é”€å”®å‡ºåº“å•_è´¦æ¬¾æ”¶æ¬¾æ¡ä»¶',
+   credit_acc_month     date comment 'é”€å”®å‡ºåº“å•_è´¦æ¬¾è´¦æ¬¾æœˆä»½'
 );
 
-alter table tbl_market_output_credit comment 'ÏúÊÛ³ö¿âµ¥_ÕË¿î';
+alter table tbl_market_output_credit comment 'é”€å”®å‡ºåº“å•_è´¦æ¬¾';
 
 /*==============================================================*/
 /* Table: tbl_market_output_detail                              */
 /*==============================================================*/
 create table tbl_market_output_detail
 (
-   tbl_market_output_no varchar(100) comment 'ÏúÊÛ³ö¿âµ¥µ¥¾İºÅÂë',
-   line_no              int comment 'ĞĞºÅ',
-   prod_id              varchar(100) comment 'ÎïÁÏ±àºÅ',
-   quantity             decimal(50,0) comment 'ÊıÁ¿',
-   old_price            decimal(50,2) comment 'ÕÛ¿ÛÇ°µ¥¼Û',
-   descount             int comment 'ÕÛÊı',
-   price                decimal(50,2) comment 'µ¥¼Û',
-   amount               decimal(50,2) comment '½ğ¶î',
-   taxrate              int comment 'Ë°ÂÊ',
-   tax_amt              decimal(50,2) comment 'Ë°¶î',
-   item_remark          varchar(255) comment '·ÖÂ¼±¸×¢',
-   tran_type            varchar(100) comment 'À´Ô´µ¥±ğ',
-   from_no              varchar(100) comment 'À´Ô´µ¥ºÅ',
-   cust_bill_no         varchar(100) comment '¿Í»§¶©µ¥'
+   tbl_market_output_no varchar(100) comment 'é”€å”®å‡ºåº“å•å•æ®å·ç ',
+   line_no              int comment 'è¡Œå·',
+   prod_id              varchar(100) comment 'ç‰©æ–™ç¼–å·',
+   quantity             decimal(50,0) comment 'æ•°é‡',
+   old_price            decimal(50,2) comment 'æŠ˜æ‰£å‰å•ä»·',
+   descount             int comment 'æŠ˜æ•°',
+   price                decimal(50,2) comment 'å•ä»·',
+   amount               decimal(50,2) comment 'é‡‘é¢',
+   taxrate              int comment 'ç¨ç‡',
+   tax_amt              decimal(50,2) comment 'ç¨é¢',
+   item_remark          varchar(255) comment 'åˆ†å½•å¤‡æ³¨',
+   tran_type            varchar(100) comment 'æ¥æºå•åˆ«',
+   from_no              varchar(100) comment 'æ¥æºå•å·',
+   cust_bill_no         varchar(100) comment 'å®¢æˆ·è®¢å•'
 );
 
-alter table tbl_market_output_detail comment 'ÏúÊÛ³ö¿âµ¥ÄÚÈİ';
+alter table tbl_market_output_detail comment 'é”€å”®å‡ºåº“å•å†…å®¹';
 
 /*==============================================================*/
 /* Table: tbl_market_output_remark                              */
 /*==============================================================*/
 create table tbl_market_output_remark
 (
-   tbl_market_output_no varchar(100) comment 'ÏúÊÛ³ö¿âµ¥µ¥¾İºÅÂë',
+   tbl_market_output_no varchar(100) comment 'é”€å”®å‡ºåº“å•å•æ®å·ç ',
    udef1                varchar(255),
    udef2                varchar(255),
    remark               varchar(5000)
 );
 
-alter table tbl_market_output_remark comment 'ÏúÊÛ³ö¿âµ¥_±¸×¢';
+alter table tbl_market_output_remark comment 'é”€å”®å‡ºåº“å•_å¤‡æ³¨';
 
 /*==============================================================*/
 /* Table: tbl_prod_basic                                        */
 /*==============================================================*/
 create table tbl_prod_basic
 (
-   prod_id              varchar(100) comment 'ÎïÁÏ±àºÅ',
-   sugges_price         decimal(50,0) comment 'ÎïÁÏ½¨ÒéÊÛ¼Û',
-   prod_curr            varchar(100) comment 'ÎïÁÏÊ¹ÓÃ±Ò±ğ',
-   prod_form            varchar(100) comment 'ÎïÁÏÎïÁÏĞÍÌ¬',
-   prod_price_of_tax    bool comment 'ÎïÁÏµ¥¼ÛÊÇ·ñº¬Ë°',
-   prod_tax_items       varchar(100) comment 'ÎïÁÏË°Ä¿',
-   prod_busi_tax_rate   int comment 'ÎïÁÏË°ÂÊ',
-   prod_advance_days    int comment 'ÎïÁÏ²É¹ºÌáÇ°ÆÚ',
-   major_supplier       varchar(100) comment 'ÎïÁÏÖ÷¹©Ó¦ÉÌ',
-   prod_std_price       decimal(50,2) comment 'ÎïÁÏ±ê×¼½ø¼Û'
+   prod_id              varchar(100) comment 'ç‰©æ–™ç¼–å·',
+   sugges_price         decimal(50,0) comment 'ç‰©æ–™å»ºè®®å”®ä»·',
+   prod_curr            varchar(100) comment 'ç‰©æ–™ä½¿ç”¨å¸åˆ«',
+   prod_form            varchar(100) comment 'ç‰©æ–™ç‰©æ–™å‹æ€',
+   prod_price_of_tax    bool comment 'ç‰©æ–™å•ä»·æ˜¯å¦å«ç¨',
+   prod_tax_items       varchar(100) comment 'ç‰©æ–™ç¨ç›®',
+   prod_busi_tax_rate   int comment 'ç‰©æ–™ç¨ç‡',
+   prod_advance_days    int comment 'ç‰©æ–™é‡‡è´­æå‰æœŸ',
+   major_supplier       varchar(100) comment 'ç‰©æ–™ä¸»ä¾›åº”å•†',
+   prod_std_price       decimal(50,2) comment 'ç‰©æ–™æ ‡å‡†è¿›ä»·'
 );
 
-alter table tbl_prod_basic comment 'ÎïÁÏ»ù±¾×ÊÁÏ';
+alter table tbl_prod_basic comment 'ç‰©æ–™åŸºæœ¬èµ„æ–™';
 
 /*==============================================================*/
 /* Table: tbl_prod_class                                        */
 /*==============================================================*/
 create table tbl_prod_class
 (
-   prod_class_id        varchar(100) not null comment 'ÎïÁÏÀà±ğ±àºÅ',
-   prod_class_name      varchar(255) comment 'ÎïÁÏÀà±ğÃû³Æ',
-   prod_class_eng_name  varchar(255) comment 'ÎïÁÏÀà±ğÓ¢ÎÄÃû³Æ',
+   prod_class_id        varchar(100) not null comment 'ç‰©æ–™ç±»åˆ«ç¼–å·',
+   prod_class_name      varchar(255) comment 'ç‰©æ–™ç±»åˆ«åç§°',
+   prod_class_eng_name  varchar(255) comment 'ç‰©æ–™ç±»åˆ«è‹±æ–‡åç§°',
    primary key (prod_class_id)
 );
 
-alter table tbl_prod_class comment 'ÎïÁÏÀà±ğ';
+alter table tbl_prod_class comment 'ç‰©æ–™ç±»åˆ«';
 
 /*==============================================================*/
 /* Table: tbl_prod_depict                                       */
 /*==============================================================*/
 create table tbl_prod_depict
 (
-   prod_id              varchar(100) comment 'ÎïÁÏ±àºÅ',
-   prod_udef1           varchar(255) comment 'ÎïÁÏ×Ô¶¨ÒåÀ¸Ò»',
-   prod_udef2           varchar(255) comment 'ÎïÁÏ×Ô¶¨ÒåÀ¸¶ş',
-   prod_desc            varchar(5000) comment 'ÎïÁÏËµÃ÷'
+   prod_id              varchar(100) comment 'ç‰©æ–™ç¼–å·',
+   prod_udef1           varchar(255) comment 'ç‰©æ–™è‡ªå®šä¹‰æ ä¸€',
+   prod_udef2           varchar(255) comment 'ç‰©æ–™è‡ªå®šä¹‰æ äºŒ',
+   prod_desc            varchar(5000) comment 'ç‰©æ–™è¯´æ˜'
 );
 
-alter table tbl_prod_depict comment 'ÎïÁÏÃèÊö';
+alter table tbl_prod_depict comment 'ç‰©æ–™æè¿°';
 
 /*==============================================================*/
 /* Table: tbl_prod_host                                         */
 /*==============================================================*/
 create table tbl_prod_host
 (
-   prod_id              varchar(100) not null comment 'ÎïÁÏ±àºÅ',
-   prod_class_id        varchar(100) comment 'ÎïÁÏÀà±ğ±àºÅ',
-   prod_name            varchar(255) comment 'ÎïÁÏÃû³Æ',
-   std_unit_id          varchar(255) comment '¼ÆÁ¿µ¥Î»',
-   prod_size            varchar(255) comment '¹æ¸ñĞÍºÅ',
-   bar_code_id          varchar(255) comment 'ÌõĞÎÂë±àºÅ',
-   eng_name             varchar(255) comment 'Ó¢ÎÄÆ·Ãû',
+   prod_id              varchar(100) not null comment 'ç‰©æ–™ç¼–å·',
+   prod_class_id        varchar(100) comment 'ç‰©æ–™ç±»åˆ«ç¼–å·',
+   prod_name            varchar(255) comment 'ç‰©æ–™åç§°',
+   std_unit_id          varchar(255) comment 'è®¡é‡å•ä½',
+   prod_size            varchar(255) comment 'è§„æ ¼å‹å·',
+   bar_code_id          varchar(255) comment 'æ¡å½¢ç ç¼–å·',
+   eng_name             varchar(255) comment 'è‹±æ–‡å“å',
    primary key (prod_id)
 );
 
-alter table tbl_prod_host comment 'ÎïÁÏÖ÷ÎÄ¼ş';
+alter table tbl_prod_host comment 'ç‰©æ–™ä¸»æ–‡ä»¶';
 
 /*==============================================================*/
 /* Table: tbl_prod_stock                                        */
 /*==============================================================*/
 create table tbl_prod_stock
 (
-   prod_id              varchar(100) comment 'ÎïÁÏ±àºÅ',
-   b_safe_all_stk       decimal(50,0) comment '°²È«´æÁ¿',
-   b_all_amt            decimal(50,0) comment 'ÆÚ³õ×ÜÊıÁ¿',
-   b_avg_cost           decimal(50,2) comment 'Æ½¾ù³É±¾',
-   b_std_cost           decimal(50,2) comment '±ê×¼³É±¾',
-   b_all_cost           decimal(50,2) comment 'ÆÚ³õ×Ü³É±¾',
-   c_safe_all_stk       decimal(50) comment 'µÍÓÚ°²È«´æÁ¿',
-   c_all_amt            decimal(50) comment 'ÏÖÓĞ×ÜÊıÁ¿',
-   c_avg_cost           decimal(50,2) comment 'ÏÖĞĞÆ½¾ù³É±¾',
-   c_std_cost           decimal(50,2) comment '±ê×¼×Ü³É±¾',
-   c_all_cost           decimal(50,2) comment 'ÏÖĞĞ×Ü³É±¾'
+   prod_id              varchar(100) comment 'ç‰©æ–™ç¼–å·',
+   b_safe_all_stk       decimal(50,0) comment 'å®‰å…¨å­˜é‡',
+   b_all_amt            decimal(50,0) comment 'æœŸåˆæ€»æ•°é‡',
+   b_avg_cost           decimal(50,2) comment 'å¹³å‡æˆæœ¬',
+   b_std_cost           decimal(50,2) comment 'æ ‡å‡†æˆæœ¬',
+   b_all_cost           decimal(50,2) comment 'æœŸåˆæ€»æˆæœ¬',
+   c_safe_all_stk       decimal(50) comment 'ä½äºå®‰å…¨å­˜é‡',
+   c_all_amt            decimal(50) comment 'ç°æœ‰æ€»æ•°é‡',
+   c_avg_cost           decimal(50,2) comment 'ç°è¡Œå¹³å‡æˆæœ¬',
+   c_std_cost           decimal(50,2) comment 'æ ‡å‡†æ€»æˆæœ¬',
+   c_all_cost           decimal(50,2) comment 'ç°è¡Œæ€»æˆæœ¬'
 );
 
-alter table tbl_prod_stock comment 'ÎïÁÏ´æÁ¿×ÜĞÅÏ¢';
+alter table tbl_prod_stock comment 'ç‰©æ–™å­˜é‡æ€»ä¿¡æ¯';
 
 alter table tbl_market_output_credit add constraint FK_Reference_5 foreign key (tbl_market_output_no)
       references tbl_market_output (tbl_market_output_no) on delete restrict on update restrict;
@@ -202,4 +202,3 @@ alter table tbl_prod_host add constraint FK_Reference_1 foreign key (prod_class_
 
 alter table tbl_prod_stock add constraint FK_Reference_4 foreign key (prod_id)
       references tbl_prod_host (prod_id) on delete restrict on update restrict;
-
